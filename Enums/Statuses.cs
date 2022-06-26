@@ -5,5 +5,5 @@
     /// </summary>
     
     //Открыт, в обработке, закрыт, спор
-    public enum Statuses { Open, Processing, Close, Dispute }
+    public enum Statuses { New, Processing, Close, Dispute }
 }

@@ -11,7 +11,7 @@ namespace StroyMaterials.Model
         [Key]
          public Guid Id { get; set; }
 
-        public string PointCode { get; set; }
+        public string PointName { get; set; }
 
         [Required]
         public string PointAdress { get; set; }

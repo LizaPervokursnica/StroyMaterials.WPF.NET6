@@ -18,8 +18,7 @@ namespace StroyMaterials.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderId { get; set; }
 
-        [Required]
-        public Customer Customer { get; set; }
+        public User? User { get; set; }
         
         public Statuses Statuse { get; set; }
 
@@ -44,7 +43,7 @@ namespace StroyMaterials.Model
                 string result = string.Empty;
                 Context context = new Context();
                 context.ProductAmount.ToList().Where(x => x.OrderId == this.Id).ToList().ForEach(x => result += $"{x.Product.ProductName}, {x.Amount}");
-                return "s";
+                return result;
             }
         }
 

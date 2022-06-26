@@ -13,48 +13,10 @@ public class Update
     public static void UpdateTables()
     {
         Context context = new Context();
+        var firstProductId = Guid.NewGuid();
+        var secondProductId = Guid.NewGuid();
 
-        if (context.Customer.Count() == 0)
-        {
-            var customers = new List<Customer>() {
-                new Customer(){
-                Id = Guid.NewGuid(), FirstName = GetRandomFirstName(), LastName = GetRandomLastName(), PersonType = Enums.PersonTypes.individual,
-                    Birthday = GetRandomDate(minDate: new DateTime(1950, 1, 1), maxDate: new DateTime(2000, 1, 1)),
-                    PhoneNumber = $"+79{GetRandomInt(000000000, 999999999)}", Email = GetRandomEmail(), Gender = GetRandomEnum<Genders>(),
-                    User = new User(){ Id = Guid.NewGuid(), Login = "customer", Password = "customer", Role = Enums.Roles.Customer }
-                },
-                new Customer(){
-                Id = Guid.NewGuid(), FirstName = GetRandomFirstName(), LastName = GetRandomLastName(), PersonType = Enums.PersonTypes.individual,
-                    Birthday = GetRandomDate(minDate: new DateTime(1950, 1, 1), maxDate: new DateTime(2000, 1, 1)),
-                    PhoneNumber = $"+79{GetRandomInt(000000000, 999999999)}", Email = GetRandomEmail(), Gender = GetRandomEnum<Genders>(),
-                    User = new User(){ Id = Guid.NewGuid(), Login = "guest", Password = "guest", Role = Enums.Roles.Guest }
-                }};
-
-            context.Customer.AddRange(customers);
-            context.SaveChanges();
-        }
-
-        if (context.Employee.Count() == 0)
-        {
-            var employees = new List<Employee>() {
-                new Employee()
-                {
-                   Id = Guid.NewGuid(), FirstName = GetRandomFirstName(), LastName = GetRandomLastName(), Position = new Position(){Id = Guid.NewGuid(), PositionName = "Администратор" },
-                    Birthday = GetRandomDate(minDate: new DateTime(1950, 1, 1), maxDate: new DateTime(2000, 1, 1)), StartWork = DateTime.Now,
-                    PhoneNumber = $"+79{GetRandomInt(000000000, 999999999)}", Email = GetRandomEmail(), Gender = GetRandomEnum<Genders>(),
-                    User = new User(){ Id = Guid.NewGuid(), Login = "admin", Password = "admin", Role = Enums.Roles.Admin }
-                },
-                new Employee()
-                {
-                   Id = Guid.NewGuid(), FirstName = GetRandomFirstName(), LastName = GetRandomLastName(), Position = new Position(){Id = Guid.NewGuid(), PositionName = "Старший менеджер" },
-                    Birthday = GetRandomDate(minDate: new DateTime(1950, 1, 1), maxDate: new DateTime(2000, 1, 1)), StartWork = DateTime.Now,
-                    PhoneNumber = $"+79{GetRandomInt(000000000, 999999999)}", Email = GetRandomEmail(), Gender = GetRandomEnum<Genders>(),
-                    User = new User(){ Id = Guid.NewGuid(), Login = "admin", Password = "admin", Role = Enums.Roles.Manager }
-                }};
-            context.Employee.AddRange(employees);
-            context.SaveChanges();
-        }
-
+        //Заполнение таблицы товаров, если в ней нет записей
         if (context.Product.Count() == 0)
         {
             var webClient = new WebClient();
@@ -304,14 +266,14 @@ public class Update
             {
                 new Product()
                 {
-                    Id = Guid.NewGuid(), ProductArticle = "PMEZMH", MaxDiscount = 10, ProductImage = webClient.DownloadData("https://github.com/LizaPervokursnica/ProjectAssets/blob/main/StroyMaterialsImages/PMEZMH.jpg?raw=true"), 
+                    Id = firstProductId, ProductArticle = "PMEZMH", MaxDiscount = 10, ProductImage = webClient.DownloadData("https://github.com/LizaPervokursnica/ProjectAssets/blob/main/StroyMaterialsImages/PMEZMH.jpg?raw=true"), 
                     ProductName = "Цемент", CurrentDiscount = 8, AmountInStock = 34,
                     ProductDescription = "Цемент Евроцемент М500 Д0 ЦЕМ I 42,5 50 кг", Сost = 440, Provider = providerМ500, MeasurementUnit = MeasurementUnits.piece,  
                     ProductCategory = categoryGeneralMaterial, Manufacturer = manufacturerМ500,
                 },
                 new Product()
                 {
-                    Id = Guid.NewGuid(), ProductArticle = "BPV4MM", MaxDiscount = 13, ProductImage = webClient.DownloadData("https://github.com/LizaPervokursnica/ProjectAssets/blob/main/StroyMaterialsImages/BPV4MM.jpg?raw=true"), 
+                    Id = secondProductId, ProductArticle = "BPV4MM", MaxDiscount = 13, ProductImage = webClient.DownloadData("https://github.com/LizaPervokursnica/ProjectAssets/blob/main/StroyMaterialsImages/BPV4MM.jpg?raw=true"), 
                     ProductName = "Пленка техническая", CurrentDiscount = 8, AmountInStock = 2,
                     ProductDescription = "Пленка техническая полиэтиленовая Изостронг 60 мк 3 м рукав 1,5 м, пог.м", Сost = 8, Provider = providerIzontorg, MeasurementUnit = MeasurementUnits.piece,  
                     ProductCategory = categoryGeneralMaterial, Manufacturer = manufacturerIzontorg
@@ -508,5 +470,188 @@ public class Update
             context.Product.AddRange(products);
             context.SaveChanges();
         };
+
+        //Заполнение таблицы пользователей, если в ней нет записей
+        if (context.User.Count() == 0)
+        {
+
+            #region Пользователи
+            var users = new List<User>()
+            {
+                new User()
+                {
+                    Id = Guid.NewGuid(), FirstName = "Амина", MiddleName = "Кирилловна", LastName = "Басова", 
+                    Login = "klh7pi4rcbtz@gmail.com", Password = "2L6KZG", Role = Roles.Admin
+                },
+                new User()
+                {
+                    Id = Guid.NewGuid(), FirstName = "Андрей", MiddleName = "Денисович", LastName = "Михайлов",
+                    Login = "gn0354mbiork@outlook.com", Password = "uzWC67", Role = Roles.Admin
+                },
+                new User()
+                {
+                    Id = Guid.NewGuid(), FirstName = "Егор", MiddleName = "Александрович", LastName = "Сидоров",
+                    Login = "1o4l05k8dwpv@yahoo.com", Password = "8ntwUp", Role = Roles.Admin
+                },
+                new User()
+                {
+                    Id = Guid.NewGuid(), FirstName = "Ульяна", MiddleName = "Ивановна", LastName = "Аксенова",
+                    Login = "hsqixl2vebuz@mail.com", Password = "YOyhfR", Role = Roles.Manager
+                },
+                new User()
+                {
+                    Id = Guid.NewGuid(), FirstName = "Камила", MiddleName = "Ивановна", LastName = "Васильева",
+                    Login = "towkse0hf26b@outlook.com", Password = "RSbvHv", Role = Roles.Manager
+                },
+                new User()
+                {
+                    Id = Guid.NewGuid(), FirstName = "Артём", MiddleName = "Родионович", LastName = "Ильин",
+                    Login = "khx0ncdwz4uj@gmail.com", Password = "rwVDh9", Role = Roles.Manager
+                },
+                new User()
+                {
+                    Id = Guid.NewGuid(), FirstName = "Василиса", MiddleName = "Фёдоровна", LastName = "Васильева",
+                    Login = "01zji3wfuq7h@outlook.com", Password = "LdNyos", Role = Roles.Client
+                },
+                new User()
+                {
+                    Id = Guid.NewGuid(), FirstName = "Василиса", MiddleName = "Матвеевна", LastName = "Кудрявцева",
+                    Login = "am65k18q7bwp@mail.com", Password = "gynQMT", Role = Roles.Client
+                },
+                new User()
+                {
+                    Id = Guid.NewGuid(), FirstName = "Николь", MiddleName = "Святославовна", LastName = "Кириллова",
+                    Login = "wt9q8i6ypx47@outlook.com", Password = "AtnDjr", Role = Roles.Client
+                },
+                new User()
+                {
+                    Id = Guid.NewGuid(), FirstName = "Полина", MiddleName = "Артёмовна", LastName = "Андреева",
+                    Login = "4o72gufv3xlz@tutanota.com", Password = "JlFRCZ", Role = Roles.Client
+                },
+                new User()
+                {
+                    Id = Guid.NewGuid(), FirstName = "Дора", MiddleName = "Не", LastName = "Дура",
+                    Login = "admin", Password = "admin", Role = Roles.Admin
+                }
+            };
+
+            #endregion
+
+            context.User.AddRange(users);
+            context.SaveChanges();
+        };
+
+        //Заполнение таблицы пунктов выдачи, если в ней нет записей
+        if (context.DeliveryPoint.Count() == 0)
+        {
+            #region Пункты выдачи
+            var deliveryPoints = new List<DeliveryPoint>()
+            {
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "344288", PointAdress = "г. Сыктывкар, ул. Чехова, 1"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "614164", PointAdress = "г.Сыктывкар,  ул. Степная, 30"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "394242", PointAdress = "г. Сыктывкар, ул. Коммунистическая, 43"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "660540", PointAdress = "г. Сыктывкар, ул. Солнечная, 25"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "125837", PointAdress = "г. Сыктывкар, ул. Шоссейная, 40"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "125703", PointAdress = "г. Сыктывкар, ул. Партизанская, 49"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "625283", PointAdress = "г. Сыктывкар, ул. Победы, 46"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "614611", PointAdress = "г. Сыктывкар, ул. Молодежная, 50"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "454311", PointAdress = "г.Сыктывкар, ул. Новая, 19"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "660007", PointAdress = "г.Сыктывкар, ул. Октябрьская, 19"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "603036", PointAdress = "г. Сыктывкар, ул. Садовая, 4"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "450983", PointAdress = "г.Сыктывкар, ул. Комсомольская, 26"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "394782", PointAdress = "г. Сыктывкар, ул. Чехова, 3"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "603002", PointAdress = "г. Сыктывкар, ул. Дзержинского, 28"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "450558", PointAdress = "г. Сыктывкар, ул. Набережная, 30"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "394060", PointAdress = "г.Сыктывкар, ул. Фрунзе, 43"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "410661", PointAdress = "г. Сыктывкар, ул. Школьная, 50"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "625590", PointAdress = "г. Сыктывкар, ул. Коммунистическая, 20"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "625683", PointAdress = "г. Сыктывкар, ул. 8 Марта"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "400562", PointAdress = "г. Сыктывкар, ул. Зеленая, 32"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "614510", PointAdress = "г. Сыктывкар, ул. Маяковского, 47"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "410542", PointAdress = "г. Сыктывкар, ул. Светлая, 46"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "620839", PointAdress = "г. Сыктывкар, ул. Цветочная, 8"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "443890", PointAdress = "г. Сыктывкар, ул. Коммунистическая, 1"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "603379", PointAdress = "г. Сыктывкар, ул. Спортивная, 46"},
+                new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "603721", PointAdress = "г. Сыктывкар, ул. Гоголя, 41"},
+            };
+            #endregion
+
+            context.DeliveryPoint.AddRange(deliveryPoints);
+            context.SaveChanges();
+        }
+
+        //Заполнение таблицы заказов, если в ней нет записей
+        if (context.Order.Count() == 0)
+        {
+            var firstOrderId = Guid.NewGuid();
+
+            var orders = new List<Order>()
+            {
+                new Order()
+                {
+                    Id = firstOrderId, DeliveryDate = new DateTime(2022, 5, 21), Statuse = Statuses.Close,
+                    GetCode = 701, DeliveryPoint = new DeliveryPoint(){Id = Guid.NewGuid(), PointName = "190949", PointAdress = "г. Сыктывкар, ул. Мичурина, 26" }, RegistrationDate = new DateTime(2022, 5, 15)
+                },
+                new Order()
+                {
+                    Id = Guid.NewGuid(), DeliveryDate = new DateTime(2022, 5, 21), Statuse = Statuses.New,
+                    GetCode = 702, DeliveryPoint = new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "630201", PointAdress = "г. Сыктывкар, ул. Комсомольская, 17"}, RegistrationDate = new DateTime(2022, 5, 15),
+                },
+                new Order()
+                {
+                    Id = Guid.NewGuid(), DeliveryDate = new DateTime(2022, 5, 21), Statuse = Statuses.Close,
+                    GetCode = 703, DeliveryPoint = new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "625560", PointAdress = "г. Сыктывкар, ул. Некрасова, 12"}, RegistrationDate = new DateTime(2022, 5, 15),
+                    User = new User(){Id = Guid.NewGuid(), FirstName = "Николь", LastName = "Кириллова", MiddleName ="Святославовна", Login = GetRandomEmail(), Password = GetRandomWords(), Role = Roles.Client}
+                },
+                new Order()
+                {
+                    Id = Guid.NewGuid(), DeliveryDate = new DateTime(2022, 5, 21), Statuse = Statuses.New,
+                    GetCode = 704, DeliveryPoint = new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "450375", PointAdress = "г. Сыктывкар ул. Клубная, 44"}, RegistrationDate = new DateTime(2022, 5, 15),
+                },
+                new Order()
+                {
+                    Id = Guid.NewGuid(), DeliveryDate = new DateTime(2022, 5, 21), Statuse = Statuses.Close,
+                    GetCode = 705, DeliveryPoint = new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "426030", PointAdress = "г. Сыктывкар, ул. Маяковского, 44"}, RegistrationDate = new DateTime(2022, 5, 15),
+                    User = new User(){Id = Guid.NewGuid(), FirstName = "Василиса", LastName = "Кудрявцева", MiddleName ="Матвеевна", Login = GetRandomEmail(), Password = GetRandomWords(), Role = Roles.Client}
+                },
+                new Order()
+                {
+                    Id = Guid.NewGuid(), DeliveryDate = new DateTime(2022, 5, 21), Statuse = Statuses.New,
+                    GetCode = 706, DeliveryPoint = new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "614753", PointAdress = "г. Сыктывкар, ул. Полевая, 35"}, RegistrationDate = new DateTime(2022, 5, 15),
+                },
+                new Order()
+                {
+                    Id = Guid.NewGuid(), DeliveryDate = new DateTime(2022, 5, 21), Statuse = Statuses.Close,
+                    GetCode = 707, DeliveryPoint = new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "630370", PointAdress = "г. Сыктывкар, ул. Шоссейная, 24"}, RegistrationDate = new DateTime(2022, 5, 15),
+                    User = new User(){Id = Guid.NewGuid(), FirstName = "Полина", LastName = "Андреева", MiddleName ="Артёмовна", Login = GetRandomEmail(), Password = GetRandomWords(), Role = Roles.Client}
+                },
+                new Order()
+                {
+                    Id = Guid.NewGuid(), DeliveryDate = new DateTime(2022, 5, 21), Statuse = Statuses.New,
+                    GetCode = 708, DeliveryPoint = new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "125061", PointAdress = "г. Сыктывкар, ул. Подгорная, 8"}, RegistrationDate = new DateTime(2022, 5, 15),
+                },
+                new Order()
+                {
+                    Id = Guid.NewGuid(), DeliveryDate = new DateTime(2022, 5, 21), Statuse = Statuses.Close,
+                    GetCode = 709, DeliveryPoint = new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "420151", PointAdress = "г. Сыктывкар, ул. Вишневая, 32"}, RegistrationDate = new DateTime(2022, 5, 15),
+                },
+                new Order()
+                {
+                    Id = Guid.NewGuid(), DeliveryDate = new DateTime(2022, 5, 21), Statuse = Statuses.Close,
+                    GetCode = 710, DeliveryPoint = new DeliveryPoint(){ Id = Guid.NewGuid(), PointName = "410172", PointAdress = "г. Сыктывкар, ул. Северная, 13"}, RegistrationDate = new DateTime(2022, 5, 15),
+                    User = new User(){Id = Guid.NewGuid(), FirstName = "Василиса", LastName = "Васильева", MiddleName ="Фёдоровна", Login = GetRandomEmail(), Password = GetRandomWords(), Role = Roles.Client}
+                },
+            };
+
+            var orderDetails = new List<ProductAmount>()
+            {
+                new ProductAmount(){Id = Guid.NewGuid(), OrderId = firstOrderId, Amount = 2, ProductId = firstProductId},
+                new ProductAmount(){Id = Guid.NewGuid(), OrderId = firstOrderId, Amount = 2, ProductId = secondProductId},
+            };
+
+            context.Order.AddRange(orders);
+            context.ProductAmount.AddRange(orderDetails);
+            context.SaveChanges();
+        }
     }
 }
