@@ -10,11 +10,16 @@ namespace StroyMaterials.Model
     public class User
     {
         [Key]
-         public Guid Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string Login { get; set; }
         [Required]
         public string Password { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        public string? MiddleName { get; set; }
         [Required]
         public Roles Role { get; set; }
     }
