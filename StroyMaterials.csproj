@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Icons\icon.ico" />
+    <None Remove="Assets\Icons\logo.png" />
     <None Remove="Assets\Icons\Something.png" />
   </ItemGroup>
 
@@ -32,6 +34,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Icons\icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\Icons\Something.png" />
   </ItemGroup>
 
