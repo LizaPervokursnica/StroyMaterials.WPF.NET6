@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StroyMaterials.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace StroyMaterials.Model
@@ -10,12 +11,40 @@ namespace StroyMaterials.Model
     {
         [Key]
         public Guid Id { get; set; }
+        
+        [Required]
+        public string ProductArticle { get; set; }
+        
         [Required]
         public string ProductName { get; set; }
-        public string Description { get; set; }
-        public byte[] Image { get; set; }
+        
+        //Единица измерения
+        [Required]
+        public MeasurementUnits MeasurementUnit { get; set; }
+
         [Required]
         public double Сost { get; set; } //стоимость 
+
+        //Размер максимальной скидки
+        public double? MaxDiscount { get; set; }
+
+        //Производитель
+        public Manufacturer Manufacturer { get; set; }
+
+        //Поставщик
         public Provider Provider { get; set; }
+
+        public ProductCategory ProductCategory { get; set; }
+
+        public double CurrentDiscount { get; set; }
+
+        //Кол-во на складе
+        [Required]
+        public int  AmountInStock { get; set; }
+
+        public string? ProductDescription { get; set; }
+
+        public byte[]? ProductImage { get; set; }
+
     }
 }
