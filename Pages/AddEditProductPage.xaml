@@ -9,28 +9,68 @@
       Title="AddEditProductPage">
     <Page.Resources>
         <Style TargetType="elements:CuteTextBox">
-            <Setter Property="Margin" Value="0 0 0 3"/>
+            <Setter Property="Margin" Value="0 0 0 2"/>
         </Style>
     </Page.Resources>
     <Grid>
-        <!--Второй столбец-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Left side-->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
-            <Label x:Name="MainGuestLabel" Content="Добавление" Style="{StaticResource PageMainLabel}"/>
+            <!--<Label x:Name="MainGuestLabel" Content="Добавление" Style="{StaticResource PageMainLabel}"/>-->
             <elements:CuteTextBox x:Name="tbProductArticle" Title="Артикль"/>
             <elements:CuteTextBox x:Name="tbProductName" Title="Наименование"/>
-            <!--Комбобокс на единицу измерения-->
             <elements:CuteTextBox x:Name="tbProductCost" Title="Стоимость"/>
             <elements:CuteTextBox x:Name="tbMaxDiscount" Title="Максимальная скидка"/>
-            <!--Комбобокс на производителя-->
-            <!--Комбобокс на поставщика-->
-            <!--Комбобокс на категорию продукта-->
             <elements:CuteTextBox x:Name="tbCurrentDiscount" Title="Текущая скидка"/>
             <elements:CuteTextBox x:Name="tbStockAmount" Title="Количество на складе"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Ед. измерения:"/>
+                <ComboBox Grid.Column="1" SelectedIndex="0" FontSize="13" Style="{StaticResource ComboboxStyle}" IsReadOnly="True" x:Name="cbMeasurementUnit" Margin="0 0 0 3"/>
+                <Label Grid.Row="1" Content="Производитель:"/>
+                <ComboBox Grid.Column="1" Grid.Row="1" SelectedValuePath="Id" DisplayMemberPath="ManufacturerName" SelectedIndex="0" FontSize="13" Style="{StaticResource ComboboxStyle}" IsReadOnly="True" x:Name="cbMaker" Margin="0 0 0 3"/>
+                <Label Grid.Row="2" Content="Поставщик:"/>
+                <ComboBox Grid.Column="1" Grid.Row="2"  SelectedValuePath="Id" DisplayMemberPath="ProviderName"  SelectedIndex="0" FontSize="13" Style="{StaticResource ComboboxStyle}" IsReadOnly="True" x:Name="cbProvider" Margin="0 0 0 3"/>
+                <Label Grid.Row="3" Content="Категория:"/>
+                <ComboBox Grid.Column="1" Grid.Row="3"  SelectedValuePath="Id" DisplayMemberPath="CategoryName"  SelectedIndex="0" FontSize="13" Style="{StaticResource ComboboxStyle}" IsReadOnly="True" x:Name="cbCategory" Margin="0 0 0 3"/>
+
+            </Grid>
+        </StackPanel>
+
+        <!--Right side-->
+        <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+            <Grid Margin="0 0 0 3" Background="{StaticResource PrimaryBackgroundColor}" Cursor="Hand" MouseDown="Grid_MouseDown" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="160"/>
+                </Grid.RowDefinitions>
+                <Image VerticalAlignment="Stretch" Grid.RowSpan="2" x:Name="ProductImage"/>
+                <Label Content="Добавить фото" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2"/>
+            </Grid>
             <elements:CuteTextBox x:Name="tbProductDescription" Height="100" Title="Описание продукта"/>
-            <!--Кртинка и её выбор-->
-            <Button x:Name="AddBtn" Content="Добавить" Style="{StaticResource AuthButton}" Click="AddNewGuestToDb"/>
-            <Button x:Name="CancelBtn" Style="{StaticResource AuthButtonAlterStyle}" Margin="0 3 0 0" Content="Отмена" Click="GoBack"/>
-            <Label x:Name="GID" Width="0" Height="0"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="AddBtn" Content="Добавить" Grid.Column="1" Style="{StaticResource AuthButton}" Margin="2.5 0 0 0" Click="AddNewProduct"/>
+                <Button x:Name="CancelBtn" Style="{StaticResource AuthButtonAlterStyle}" Margin="0 0 2.5 0" Content="Отмена" />
+            </Grid>
         </StackPanel>
     </Grid>
 </Page>

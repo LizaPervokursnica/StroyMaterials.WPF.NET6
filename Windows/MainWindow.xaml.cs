@@ -27,5 +27,8 @@ namespace StroyMaterials.Windows
         }
 
         private void GoToProduct() => PagesNavigation.Navigate(new Uri("Pages/ProductPage.xaml", UriKind.RelativeOrAbsolute));
+
+        private void rdProduct_Click(object sender, RoutedEventArgs e) => GoToProduct();
+
     }
 }

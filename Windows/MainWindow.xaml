@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StroyMaterials.Windows"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" MinHeight="600" Height="600" MinWidth="850" Width="850" Icon="/Assets/Icons/icon.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -24,7 +24,7 @@
                 <!-- Logo -->
                 <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top">
                     <Path Data="{DynamicResource logo}" Margin="18 0 0 0" Stretch="Fill" Fill="{DynamicResource PrimaryBlueColor}" Width="25" Height="25" HorizontalAlignment="Left"/>
-                    <Label Content="Hotel OwO" FontFamily="{StaticResource BoldTitleMontserratFont}" Foreground="{DynamicResource PrimaryBlueColor}"  FontSize="20" VerticalAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="12 0 0 0"/>
+                    <Label Content="StroyMaterials" FontFamily="{StaticResource BoldTitleMontserratFont}" Foreground="{DynamicResource PrimaryBlueColor}"  FontSize="16" VerticalAlignment="Center" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="12 0 0 0"/>
                 </StackPanel>
 
                 <!-- Menu -->
@@ -50,14 +50,13 @@
                 </ToggleButton>
 
                 <StackPanel Grid.Row="3">
-                    <RadioButton x:Name="rdHome" IsChecked="True" Content="Номера" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource home}" FontFamily="{StaticResource LableMontserratFont}" Cursor="Hand"/>
-                    <RadioButton x:Name="rdSounds" Content="Гости" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource person}" FontFamily="{StaticResource LableMontserratFont}" Margin="0 5 0 5" Cursor="Hand" />
+                    <RadioButton x:Name="rdProduct" IsChecked="True" Content="Товары" Style="{DynamicResource MenuRadioButtonStyle}" Tag="{DynamicResource product}" FontFamily="{StaticResource LableMontserratFont}" Cursor="Hand" Click="rdProduct_Click"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" VerticalAlignment="Bottom" Orientation="Horizontal" Width="200" Margin="0 0 0 20">
-                    <Ellipse Width="40" Height="40" Margin="10 0 0 0">
+                    <Ellipse Width="40" Height="40" Margin="10 0 0 0" SnapsToDevicePixels="True">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="/Assets/Icons/Something.png"/>
+                            <ImageBrush ImageSource="/Assets/Icons/logo.png"/>
                         </Ellipse.Fill>
                     </Ellipse>
                     <StackPanel Orientation="Vertical" Margin="8 0 0 0">

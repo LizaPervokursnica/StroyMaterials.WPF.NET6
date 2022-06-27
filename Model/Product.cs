@@ -30,11 +30,14 @@ namespace StroyMaterials.Model
 
         //Производитель
         public Manufacturer Manufacturer { get; set; }
+        public Guid? ManufacturerId { get; set; }
 
         //Поставщик
         public Provider Provider { get; set; }
+        public Guid? ProviderId { get; set; }
 
         public ProductCategory ProductCategory { get; set; }
+        public Guid? ProductCategoryId { get; set; }
 
         public double CurrentDiscount { get; set; }
 

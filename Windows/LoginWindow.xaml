@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:StroyMaterials.Windows"
         xmlns:easy="clr-namespace:EasyCaptcha.Wpf;assembly=EasyCaptcha.Wpf" xmlns:controls="clr-namespace:StroyMaterials.Controls"
         mc:Ignorable="d"
-        Title="Вход" Height="450" Width="800">
+        Title="Вход" Height="450" Width="800" Icon="/Assets/Icons/icon.ico" >
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
             <Label Style="{StaticResource PageMainLabel}" Content="Вход в систему"/>

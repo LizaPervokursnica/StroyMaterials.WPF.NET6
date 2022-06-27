@@ -27,5 +27,11 @@ namespace StroyMaterials.Pages
             InitializeComponent();
             lvProduct.ItemsSource = context.Product.ToList();
         }
+
+        private void AddToDb_Click(object sender, MouseButtonEventArgs e)
+        {
+            AddEditProductPage toAdd = new AddEditProductPage();
+            NavigationService.Navigate(toAdd);
+        }
     }
 }

@@ -17,6 +17,8 @@ namespace StroyMaterials.DataAccess
         public DbSet<Order> Order { get; set; }
         public DbSet<ProductAmount> ProductAmount { get; set; }
         public DbSet<Position> Position { get; set; }
+        public DbSet<Manufacturer> Manufacturer { get; set; }
+        public DbSet<ProductCategory> ProductCategory { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
