@@ -7,11 +7,11 @@
         xmlns:easy="clr-namespace:EasyCaptcha.Wpf;assembly=EasyCaptcha.Wpf" xmlns:controls="clr-namespace:StroyMaterials.Controls"
         mc:Ignorable="d"
         Title="Вход" Height="450" Width="800" Icon="/Assets/Icons/icon.ico" >
-    <Grid>
+    <Grid MouseDown="Grid_MouseDown" >
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
             <Label Style="{StaticResource PageMainLabel}" Content="Вход в систему"/>
             <controls:CuteTextBox x:Name="LoginTBox" Margin="0 0 0 5" Title="Логин"/>
-            <controls:СutePasswordBox Margin="0 0 0 15" Height="35" Title="Пароль"/>
+            <controls:СutePasswordBox x:Name="passwordBx" Margin="0 0 0 15" Height="35" Title="Пароль"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <easy:Captcha x:Name="MyCaptcha" Width="100" Height="50" Margin="0 0 5 15"/>
                 <Button Style="{DynamicResource IconButton}" Grid.Column="1" Height="50" Margin="0 0 0 15" 

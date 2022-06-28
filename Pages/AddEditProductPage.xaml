@@ -62,14 +62,15 @@
                 <Image VerticalAlignment="Stretch" Grid.RowSpan="2" x:Name="ProductImage"/>
                 <Label Content="Добавить фото" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2"/>
             </Grid>
-            <elements:CuteTextBox x:Name="tbProductDescription" Height="100" Title="Описание продукта"/>
+            <Label Content="Описание продукта: "/>
+            <TextBox Height="100" x:Name="tbProductDescription" TextWrapping="Wrap"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="AddBtn" Content="Добавить" Grid.Column="1" Style="{StaticResource AuthButton}" Margin="2.5 0 0 0" Click="AddNewProduct"/>
-                <Button x:Name="CancelBtn" Style="{StaticResource AuthButtonAlterStyle}" Margin="0 0 2.5 0" Content="Отмена" />
+                <Button x:Name="AddBtn" Content="Добавить" Grid.Column="1" Style="{StaticResource AuthButton}" Margin="2.5 0 0 0" Click="AddOrEditBtn_Click" />
+                <Button x:Name="CancelBtn" Style="{StaticResource AuthButtonAlterStyle}" Margin="0 0 2.5 0" Content="Отмена" Click="CancelBtn_Click" />
             </Grid>
         </StackPanel>
     </Grid>

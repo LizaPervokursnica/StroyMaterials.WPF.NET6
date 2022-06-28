@@ -19,6 +19,7 @@ namespace StroyMaterials.Model
         public int OrderId { get; set; }
 
         public User? User { get; set; }
+        public Guid? UserId { get; set; }
         
         public Statuses Statuse { get; set; }
 
@@ -32,7 +33,8 @@ namespace StroyMaterials.Model
         //Дата доставки
         public DateTime DeliveryDate { get; set; }
 
-        public DeliveryPoint DeliveryPoint { get; set; }
+        public DeliveryPoint? DeliveryPoint { get; set; }
+        public Guid? DeliveryPointId { get; set; }
 
         //Состав заказа
         [NotMapped]

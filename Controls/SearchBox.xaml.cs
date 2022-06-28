@@ -8,7 +8,11 @@ namespace StroyMaterials.Controls
     /// </summary>
     public partial class SearchBox : UserControl
     {
-        public SearchBox() => InitializeComponent();
+
+        public SearchBox()
+        {
+            InitializeComponent();
+        }
         private void SearchBorder_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
         {
             if (SearchItemTxt.Text == "") LblSearchTxt.Visibility = Visibility.Visible;
