@@ -6,7 +6,7 @@
     <SolidColorBrush x:Key="SecundaryBackgroundColor" Color="#f9f9f9"/>
 
     <!-- Primary Colors -->
-    <SolidColorBrush x:Key="PrimaryBlueColor" Color="#5B7FFF"/>
+    <SolidColorBrush x:Key="PrimaryBlueColor" Color="#76e383"/>
     <SolidColorBrush x:Key="PrimaryGrayColor" Color="#BFBFC4"/>
 
     <!-- Secundary Colors -->
@@ -29,11 +29,11 @@
     <SolidColorBrush x:Key="LabelForeground" Color="#979997"/>
 
     <!--Main Authorization Button Colors -->
-    <SolidColorBrush x:Key="SeconBtnColor" Color="#6666ff"/>
+    <SolidColorBrush x:Key="SeconBtnColor" Color="#498c51"/>
 
     <!--Alt Authorization Button Colors -->
-    <SolidColorBrush x:Key="AltFirstBtnColor" Color="#a8beff"/>
-    <SolidColorBrush x:Key="AltSecondBtnColor" Color="#9db9ff"/>
+    <SolidColorBrush x:Key="AltFirstBtnColor" Color="#76e383"/>
+    <SolidColorBrush x:Key="AltSecondBtnColor" Color="#6f8253"/>
 
     <!--IconButton-->
     <SolidColorBrush x:Key="IconButtonPathColor" Color="#979997"/>
