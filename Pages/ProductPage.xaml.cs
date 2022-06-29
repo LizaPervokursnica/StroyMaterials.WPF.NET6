@@ -97,5 +97,7 @@ namespace StroyMaterials.Pages
             var shopCart = new ShoppingCartPage(products);
             NavigationService.Navigate(shopCart);
         }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e) => Keyboard.ClearFocus();
     }
 }

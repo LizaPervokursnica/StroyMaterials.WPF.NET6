@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -179,5 +180,7 @@ namespace StroyMaterials.Pages
             ProductPage productPage = new ProductPage();
             NavigationService.Navigate(productPage);
         }
+
+        private void Grid_MouseDown_1(object sender, System.Windows.Input.MouseButtonEventArgs e) => Keyboard.ClearFocus();
     }
 }

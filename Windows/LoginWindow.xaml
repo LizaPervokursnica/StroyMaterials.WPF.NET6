@@ -7,7 +7,7 @@
         xmlns:easy="clr-namespace:EasyCaptcha.Wpf;assembly=EasyCaptcha.Wpf" xmlns:controls="clr-namespace:StroyMaterials.Controls"
         mc:Ignorable="d"
         Title="Вход" Height="450" Width="800" Icon="/Assets/Icons/icon.ico" >
-    <Grid MouseDown="Grid_MouseDown" >
+    <Grid MouseDown="Grid_MouseDown" Background="White">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
             <Label Style="{StaticResource PageMainLabel}" Content="Вход в систему"/>
             <controls:CuteTextBox x:Name="LoginTBox" Margin="0 0 0 5" Title="Логин"/>

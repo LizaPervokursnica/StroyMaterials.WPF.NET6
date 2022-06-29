@@ -56,6 +56,5 @@ namespace StroyMaterials.Windows
             MyCaptcha.CreateCaptcha(Captcha.LetterOption.Alphanumeric, 5);
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e) => Keyboard.ClearFocus();
-        
     }
 }
