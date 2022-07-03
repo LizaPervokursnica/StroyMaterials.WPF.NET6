@@ -35,15 +35,20 @@ namespace StroyMaterials.Windows
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(CaptchaTBox.cText == MyCaptcha.CaptchaText && context.User.FirstOrDefault(x => x.Login == LoginTBox.cText && x.Password == passwordBx.PassBox.Password) != null)
+            bool validCaptcha = CaptchaTBox.cText == MyCaptcha.CaptchaText;
+            var findUser = context.User.FirstOrDefault(x => x.Login == LoginTBox.cText && x.Password == passwordBx.PassBox.Password);
+            if (!validCaptcha) MessageBox.Show("Проверка не пройдена.\nПовторите попытку.", "Капча введена неверно", MessageBoxButton.OK, MessageBoxImage.Question);
+            if (validCaptcha && findUser != null)
             {
-                var userRole = context.User.FirstOrDefault(x => x.Login == LoginTBox.cText && x.Password == passwordBx.PassBox.Password).Role;
+                var userRole = findUser.Role;
                 MainWindow mainWindow = new MainWindow(userRole);
                 mainWindow.Show();
-                this.Hide();
+                Hide();
             }
+            else if(validCaptcha && findUser == null) MessageBox.Show("Пользователь не найден в базе, повторите попытку.", "Пользователь не найден", MessageBoxButton.OK, MessageBoxImage.Error);
+
             badCaptcha++;
-            if(badCaptcha > 3)
+            if(badCaptcha >= 3)
             {
                 UpdateCaptcha();
                 badCaptcha = 0;

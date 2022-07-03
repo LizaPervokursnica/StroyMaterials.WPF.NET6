@@ -13,17 +13,63 @@
             <RowDefinition Height="8*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Content="Пусто" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <DataGrid x:Name="productGrid" AutoGenerateColumns="True">
+        <Label x:Name="emptyLabel" Content="Пусто" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ListView x:Name="lvProduct" HorizontalAlignment="Center" 
+                  ItemContainerStyle="{StaticResource ListViewItemWithoutSelection}" Margin="5" 
+                  SelectionMode="Single" BorderThickness="0" Background="Transparent"  
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="240" Height="240" Background="{StaticResource PrimaryBackgroundColor}" CornerRadius="15">
 
-        </DataGrid>
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <TextBlock Text="Пункт выдачи" VerticalAlignment="Center"/>
-            <ComboBox Width="200" x:Name="cbPoints"/>
-        
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                          
+                            <Image Grid.Row="1" Source="/Assets/Pictures/emptyImage.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="30"/>
+
+                            <Rectangle Grid.Row="1" SnapsToDevicePixels="True" RadiusX="15" RadiusY="15" Margin="5">
+                                <Rectangle.Fill>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding ProductImage, TargetNullValue={x:Null}}">
+                                    </ImageBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <Label FontSize="12" Margin="4 0 0 0" FontFamily="{StaticResource LableMontserratFont}" Content="{Binding ProductName}"/>
+                                    <TextBlock FontSize="12" Margin="9 0 0 0" FontFamily="{StaticResource LableMontserratFont}">
+                                        <Run FontWeight="Bold" Text="Цена: "/>
+                                        <Run Text="{Binding Сost}"/>
+                                        <Run Text="р."/>
+                                    </TextBlock>
+                                    <TextBlock Foreground="{StaticResource TBoxSelectionBrush}" FontFamily="{StaticResource CustomTextFont}" Text="{Binding ProductDescription}" TextWrapping="Wrap" Height="30" Margin="10 0 0 0"/>
+                                </StackPanel>
+                                <Button Content="В корзину" Style="{StaticResource AuthButton}" FontSize="10" FontFamily="{StaticResource LableMontserratFont}" Grid.Column="1" Height="30" Width="70" Click="Button_Click"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Text="Пункт выдачи: " VerticalAlignment="Center"/>
+            <ComboBox Style="{StaticResource ComboboxStyle}" SelectedValuePath="Id" DisplayMemberPath="PointAdress" IsReadOnly="True" Width="200" Height="30" x:Name="cbPoints"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Width="150" Content="Оформить" Click="Button_Click"/>
+            <Button Style="{DynamicResource AuthButtonAlterStyle}" Height="35" Width="150" Content="Оформить" Margin="4" Click="Button_Click"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -12,7 +12,7 @@
             <Setter Property="Margin" Value="0 0 0 2"/>
         </Style>
     </Page.Resources>
-    <Grid MouseDown="Grid_MouseDown_1" Background="Transparent">
+    <Grid MouseDown="ClearWindowFocus" Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -54,13 +54,22 @@
 
         <!--Right side-->
         <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+            <Grid Margin="0 0 0 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="AddPhotoButton"  Content="Выбрать" Foreground="Black" Background="Transparent" Grid.Column="1" Style="{StaticResource AuthButton}" Margin="2.5 5 0 0" Click="AddPhotoButtonClick" />
+                <Button x:Name="DeletePhotoButton"  Foreground="Black" Background="Transparent" Style="{StaticResource AuthButtonAlterStyle}" Margin="0 5 2.5 0" Content="Удалить" Cursor="Hand" Click="ClearPhotoButtonClick" />
+            </Grid>
             <Grid Margin="0 0 0 3" Background="{StaticResource PrimaryBackgroundColor}" Cursor="Hand" MouseDown="Grid_MouseDown" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="160"/>
                 </Grid.RowDefinitions>
-                <Image VerticalAlignment="Stretch" Grid.RowSpan="2" x:Name="ProductImage"/>
                 <Label Content="Добавить фото" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2"/>
+                <Image VerticalAlignment="Stretch" Grid.RowSpan="2" x:Name="ProductImage"/>
+                
             </Grid>
             <Label Content="Описание продукта: "/>
             <TextBox Height="100" x:Name="tbProductDescription" TextWrapping="Wrap"/>
@@ -69,8 +78,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="AddBtn" Content="Добавить" Grid.Column="1" Style="{StaticResource AuthButton}" Margin="2.5 0 0 0" Click="AddOrEditBtn_Click" />
-                <Button x:Name="CancelBtn" Style="{StaticResource AuthButtonAlterStyle}" Margin="0 0 2.5 0" Content="Отмена" Click="CancelBtn_Click" />
+                <Button x:Name="AddBtn" Content="Добавить" Grid.Column="1" Style="{StaticResource AuthButton}" Margin="2.5 5 0 0" Click="AddOrEditBtn_Click" Cursor="Hand" />
+                <Button x:Name="CancelBtn" Style="{StaticResource AuthButtonAlterStyle}" Margin="0 5 2.5 0" Content="Отмена" Click="CancelBtn_Click" Cursor="Hand" />
             </Grid>
         </StackPanel>
     </Grid>
