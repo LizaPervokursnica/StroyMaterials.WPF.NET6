@@ -9,7 +9,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace StroyMaterials.Pages
@@ -22,65 +21,78 @@ namespace StroyMaterials.Pages
         Context context = new Context();
         private byte[] _imageBytes = null;
         public Guid thisProductId;
-        public AddEditProductPage()
+        Roles role_ = Roles.Guest;
+
+        List<string> measurementUnits = new()
+        {
+            "Штука",
+            "Грамм",
+            "Килограмм",
+            "Литр"
+        };
+
+        public AddEditProductPage(Roles role)
         {
             InitializeComponent();
-            List<string> measurementUnits = new()
-            {
-                "Штука", "Грамм", "Килограмм", "Литр"
-            };
+            role_ = role;
             cbMeasurementUnit.ItemsSource = measurementUnits;
+            cbMaker.ItemsSource = context.Manufacturer.ToList();
+            cbProvider.ItemsSource = context.Provider.ToList();
+            cbCategory.ItemsSource = context.ProductCategory.ToList();
+        }
 
+
+        private void ConvertImage()
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create((BitmapImage)ProductImage.Source));
+                encoder.Save(stream);
+                _imageBytes = stream.ToArray();
+            }
+        }
+
+        public AddEditProductPage(Roles role, Product product, string buttonTitle)
+        {
+            InitializeComponent();
+            role_ = role;
+            cbMeasurementUnit.ItemsSource = measurementUnits;
             cbMaker.ItemsSource = context.Manufacturer.ToList();
             cbProvider.ItemsSource = context.Provider.ToList();
             cbCategory.ItemsSource = context.ProductCategory.ToList();
 
-        }
-
-        public AddEditProductPage(Guid id, int stockAmount, double currentDiscount, double? maxDiscount, double cost, string productName, 
-            string productArticle, string productDescription, Guid? providerId, Guid? manufacturerId, 
-            Guid? productCategoryId, byte[] productImage, MeasurementUnits measurementUnit, string buttonText)
-        {
-            InitializeComponent();
-            List<string> measurementUnits = new()
-            {
-                "Штука", "Грамм", "Килограмм", "Литр"
-            };
-            cbMeasurementUnit.ItemsSource = measurementUnits;
-
             BitmapImage bitmapImg;
-
-                using (var ms = new System.IO.MemoryStream(productImage))
+            if (product.ProductImage != null)
+            {
+                using (var ms = new MemoryStream(product.ProductImage))
                 {
                     var image = new BitmapImage();
                     image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad; // here
+                    image.CacheOption = BitmapCacheOption.OnLoad;
                     image.StreamSource = ms;
                     image.EndInit();
-                bitmapImg = image;
+                    bitmapImg = image;
                 }
+                ProductImage.Source = bitmapImg;
+            }
 
-            cbMaker.ItemsSource = context.Manufacturer.ToList();
-            cbProvider.ItemsSource = context.Provider.ToList();
-            cbCategory.ItemsSource = context.ProductCategory.ToList();
-
-            thisProductId = id;
-            tbStockAmount.cText = stockAmount.ToString();
-            tbCurrentDiscount.cText = currentDiscount.ToString();
-            tbMaxDiscount.cText = maxDiscount.ToString();
-            tbProductCost.cText = cost.ToString();
+            thisProductId = product.Id;
+            tbStockAmount.cText = product.AmountInStock.ToString();
+            tbCurrentDiscount.cText = product.CurrentDiscount.ToString();
+            tbMaxDiscount.cText = product.MaxDiscount.ToString();
+            tbProductCost.cText = product.Сost.ToString();
             cbMeasurementUnit.SelectedIndex = 0;
-            tbProductName.cText = productName;
-            tbProductArticle.cText = productArticle;
-            tbProductDescription.Text = productDescription;
-            cbProvider.SelectedValue = providerId;
-            cbMaker.SelectedValue = manufacturerId;
-            cbCategory.SelectedValue = productCategoryId;
-            ProductImage.Source = bitmapImg;
-            AddBtn.Content = buttonText;
+            tbProductName.cText = product.ProductName;
+            tbProductArticle.cText = product.ProductArticle;
+            tbProductDescription.Text = product.ProductDescription;
+            cbProvider.SelectedValue = product.ProviderId;
+            cbMaker.SelectedValue = product.ManufacturerId;
+            cbCategory.SelectedValue = product.ProductCategoryId;
+            AddBtn.Content = buttonTitle;
         }
 
-        private void Grid_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OpenDialog()
         {
             var dialog = new OpenFileDialog
             {
@@ -90,31 +102,37 @@ namespace StroyMaterials.Pages
             };
 
             if (dialog.ShowDialog() != true) { return; }
+            var path = dialog.FileName;
+            ProductImage.Source = new BitmapImage(new Uri(path));
+        }
 
-            var imagePath = dialog.FileName;
-            ProductImage.Source = new BitmapImage(new Uri(imagePath));
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            OpenDialog();
+            ConvertImage();
+        }
 
-            using (var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+        public MeasurementUnits SelectedMeasurement()
+        {
+            return cbMeasurementUnit.SelectedValue switch
             {
-                _imageBytes = new byte[fs.Length];
-            }
+                "Грамм" => Enums.MeasurementUnits.gram,
+                "Штука" => Enums.MeasurementUnits.piece,
+                "Килограмм" => Enums.MeasurementUnits.kg,
+                "Литр" => Enums.MeasurementUnits.liter,
+            };
         }
 
         private void AddOrEditBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(AddBtn.Content == "Добавить")
+            if(AddBtn.Content.ToString() == "Добавить")
             {
+                if (ProductImage != null) ConvertImage();
                 var stock = int.TryParse(tbStockAmount.cText, out int stockAmount);
                 var cDiscount = double.TryParse(tbCurrentDiscount.cText, out double currentDiscount);
                 var mDiscount = double.TryParse(tbMaxDiscount.cText, out double maxDiscount);
                 var cost = double.TryParse(tbProductCost.cText, out double productCost);
-                var measurementUnit = cbMeasurementUnit.SelectedValue switch
-                {
-                    "Грамм" => Enums.MeasurementUnits.gram,
-                    "Штука" => Enums.MeasurementUnits.piece,
-                    "Килограмм" => Enums.MeasurementUnits.kg,
-                    "Литр" => Enums.MeasurementUnits.liter,
-                };
+                var measurementUnit = SelectedMeasurement();
 
                 if (stock && cDiscount && mDiscount && cost)
                 {
@@ -135,23 +153,19 @@ namespace StroyMaterials.Pages
                         MeasurementUnit = measurementUnit
                     });
                     context.SaveChanges();
-                    ProductPage productPage = new ProductPage();
-                    NavigationService.Navigate(productPage);
+                    MessageBox.Show("Запись успешно добавлена в таблицу.", "Запись добавлена", MessageBoxButton.OK);
+                    NavigateProductPage();
                 }
+                else MessageBox.Show("Убедитесь, что верно заполнили данные.");
             }
-            else if(AddBtn.Content == "Сохранить")
+            else if(AddBtn.Content.ToString() == "Сохранить")
             {
+                if(ProductImage != null) ConvertImage();
                 var stock = int.TryParse(tbStockAmount.cText, out int stockAmount);
                 var cDiscount = double.TryParse(tbCurrentDiscount.cText, out double currentDiscount);
                 var mDiscount = double.TryParse(tbMaxDiscount.cText, out double maxDiscount);
                 var cost = double.TryParse(tbProductCost.cText, out double productCost);
-                var measurementUnit = cbMeasurementUnit.SelectedValue switch
-                {
-                    "Грамм" => Enums.MeasurementUnits.gram,
-                    "Штука" => Enums.MeasurementUnits.piece,
-                    "Килограмм" => Enums.MeasurementUnits.kg,
-                    "Литр" => Enums.MeasurementUnits.liter,
-                };
+                var measurementUnit = SelectedMeasurement();
                 if (stock && cDiscount && mDiscount && cost)
                 {
                     var currentProductItem = context.Product.Where(x => x.Id == thisProductId).FirstOrDefault();
@@ -168,19 +182,30 @@ namespace StroyMaterials.Pages
                     currentProductItem.ProductImage = _imageBytes;
                     currentProductItem.MeasurementUnit = measurementUnit;
                     context.SaveChanges();
-                    ProductPage productPage = new ProductPage();
-                    NavigationService.Navigate(productPage);
+                    MessageBox.Show("Запись успешно сохранена в таблице.", "Успешно", MessageBoxButton.OK);
+                    NavigateProductPage();
                 }
-
+                else MessageBox.Show("Убедитесь, что верно заполнили данные.");
             }
         }
 
-        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        private void CancelBtn_Click(object sender, RoutedEventArgs e) => NavigateProductPage();
+        private void NavigateProductPage()
         {
-            ProductPage productPage = new ProductPage();
+            ProductPage productPage = new ProductPage(role_);
             NavigationService.Navigate(productPage);
         }
+        private void ClearWindowFocus(object sender, MouseButtonEventArgs e) => Keyboard.ClearFocus();
 
-        private void Grid_MouseDown_1(object sender, System.Windows.Input.MouseButtonEventArgs e) => Keyboard.ClearFocus();
+        private void ClearPhotoButtonClick(object sender, RoutedEventArgs e)
+        {
+            ProductImage.Source = null;
+        }
+
+        private void AddPhotoButtonClick(object sender, RoutedEventArgs e)
+        {
+            ProductImage.Source = null;
+            OpenDialog();
+        }
     }
 }

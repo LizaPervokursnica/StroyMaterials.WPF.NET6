@@ -39,7 +39,7 @@ namespace StroyMaterials.Pages
         {
             if (role == Roles.Admin)
             {
-                AddEditProductPage toAdd = new AddEditProductPage();
+                AddEditProductPage toAdd = new AddEditProductPage(role);
                 NavigationService.Navigate(toAdd);
             }
             else MessageBox.Show("Нет прав");
@@ -60,7 +60,9 @@ namespace StroyMaterials.Pages
                 var move = MessageBox.Show("Вы точно хотите удалить выбранный элемент?", "Внимание!", MessageBoxButton.YesNo);
                 if (move == MessageBoxResult.Yes)
                 {
-                    context.Product.Remove(context.Product.Find(product.Id));
+                    var removeOrders = context.ProductAmount.Where(x => x.ProductId == product.Id).ToList();
+                    context.RemoveRange(removeOrders);
+                    context.Product.Remove(context.Product.FirstOrDefault(X => X.Id == product.Id));
                     context.SaveChanges();
                     lvProduct.ItemsSource = context.Product.ToArray();
                 }
@@ -74,9 +76,7 @@ namespace StroyMaterials.Pages
 
             if (button.DataContext is Product product && role == Roles.Admin)
             {
-                AddEditProductPage toProduct = new AddEditProductPage(product.Id, product.AmountInStock, product.CurrentDiscount, 
-                    product.MaxDiscount, product.Сost, product.ProductName, product.ProductArticle, product.ProductDescription, product.ProviderId,
-                    product.ManufacturerId, product.ProductCategoryId, product.ProductImage, product.MeasurementUnit, "Сохранить");
+                AddEditProductPage toProduct = new AddEditProductPage(role, product, "Сохранить");
                 NavigationService.Navigate(toProduct);
             }
             else MessageBox.Show("Не выбран элемент для редактирования или нет прав", "Выберите элемент", MessageBoxButton.OK);
@@ -94,7 +94,7 @@ namespace StroyMaterials.Pages
 
         private void cartShop_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var shopCart = new ShoppingCartPage(products);
+            var shopCart = new ShoppingCartPage(products, role);
             NavigationService.Navigate(shopCart);
         }
 

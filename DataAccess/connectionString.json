@@ -1,5 +1,5 @@
 {
   "ConnectionStrings": {
-    "MaterialsDataSource": "Server=DESKTOP-TIOAP5S;Database=StroyMaterialsDb;Trusted_Connection=True;"
+    "MaterialsDataSource": "Server=DEVILREBBIT;Database=StroyMaterialsDb;Trusted_Connection=True;"
   }
 }

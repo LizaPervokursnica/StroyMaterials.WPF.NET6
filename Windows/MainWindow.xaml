@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StroyMaterials.Windows"
-        mc:Ignorable="d"
-        Title="MainWindow" MinHeight="600" MinWidth="1000" Height="650" Width="1000" Icon="/Assets/Icons/icon.ico" Closing="Window_Closing">
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="MainWindow" MinHeight="600" MinWidth="1100" Height="650" Width="1000" Icon="/Assets/Icons/icon.ico" Closing="Window_Closing">
     <Grid MouseDown="Grid_MouseDown">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -56,11 +56,12 @@
                 <StackPanel Grid.Row="3" VerticalAlignment="Bottom" Orientation="Horizontal" Width="200" Margin="0 0 0 20">
                     <Ellipse Width="40" Height="40" Margin="10 0 0 0" SnapsToDevicePixels="True">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="/Assets/Icons/logo.png"/>
+                            <ImageBrush  Stretch="UniformToFill" ImageSource="/Assets/Icons/logo.png"/>
                         </Ellipse.Fill>
                     </Ellipse>
-                    <StackPanel Orientation="Vertical" Margin="8 0 0 0">
+                    <StackPanel Margin="8 0 0 0">
                         <Label Content="Role" x:Name="RoleNamelbl" FontFamily="{StaticResource CustomTextFont}" Foreground="{DynamicResource TextPrimaryColor}" FontSize="14" HorizontalContentAlignment="Center" HorizontalAlignment="Left"/>
+                        <Label Content="Сменить аккаунт" Foreground="red" Cursor="Hand" MouseDown="Label_MouseDown" />
                     </StackPanel>
                 </StackPanel>
             </Grid>

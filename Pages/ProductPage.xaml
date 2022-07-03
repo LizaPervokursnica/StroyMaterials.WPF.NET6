@@ -15,7 +15,7 @@
         <Grid Margin="10 0 10 0">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal">
-                <elements:SearchBox x:Name="SBox" Width="300"/>
+                    <elements:SearchBox x:Name="SBox" Width="300"/>
                     <elements:IconButton BtnIcon="{StaticResource loupe}" Margin="-10 0 0 0" Background="Gray" ToolTip="Найти" Width="60" MouseDown="UpdateListViewBtn_Click"  />
                 </StackPanel>
                 <elements:IconButton IsEnabled="False" x:Name="AddProduct" BtnIcon="{StaticResource add}" ToolTip="Добавить продукт" Width="60" MouseDown="AddToDb_Click" />
@@ -26,58 +26,54 @@
                   ItemContainerStyle="{StaticResource ListViewItemWithoutSelection}" Margin="5" 
                   SelectionMode="Single" BorderThickness="0" Background="Transparent"  
                   Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Border Width="240" Height="240" Background="{StaticResource PrimaryBackgroundColor}" CornerRadius="15">
-                            
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="20"/>
-                                    <RowDefinition Height="2*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="240" Height="240" Background="{StaticResource PrimaryBackgroundColor}" CornerRadius="15">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
                             <StackPanel x:Name="lvAdminBtns" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0" Orientation="Horizontal" Margin="0 3 5 0">
                                 <Button x:Name="EditButton" Click="EditButton_Click"  Style="{StaticResource SmallEditButton}" Width="16" Height="16"/>
                                 <Button x:Name="DeleteBtn" Click="DeleteBtn_Click" Style="{StaticResource SmallButton}" Width="16" Height="16"/>
                             </StackPanel>
                             <Image Grid.Row="1" Source="/Assets/Pictures/emptyImage.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="30"/>
-                           
+
                             <Rectangle Grid.Row="1" SnapsToDevicePixels="True" RadiusX="15" RadiusY="15" Margin="5">
-                                    <Rectangle.Fill>
+                                <Rectangle.Fill>
                                     <ImageBrush Stretch="UniformToFill" ImageSource="{Binding ProductImage, TargetNullValue={x:Null}}">
                                     </ImageBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                                <Grid Grid.Row="2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel>
-                                        <Label FontSize="12" Margin="4 0 0 0" FontFamily="{StaticResource LableMontserratFont}" 
-                                               Content="{Binding ProductName}"/>
-                                        
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <Label FontSize="12" Margin="4 0 0 0" FontFamily="{StaticResource LableMontserratFont}" Content="{Binding ProductName}"/>
                                     <TextBlock FontSize="12" Margin="9 0 0 0" FontFamily="{StaticResource LableMontserratFont}">
                                         <Run FontWeight="Bold" Text="Цена: "/>
                                         <Run Text="{Binding Сost}"/>
                                         <Run Text="р."/>
                                     </TextBlock>
-
-                                    <TextBlock Foreground="{StaticResource TBoxSelectionBrush}" FontFamily="{StaticResource CustomTextFont}" 
-                                                   Text="{Binding ProductDescription}" TextWrapping="Wrap" Height="30" Margin="10 0 0 0"/>
+                                    <TextBlock Foreground="{StaticResource TBoxSelectionBrush}" FontFamily="{StaticResource CustomTextFont}" Text="{Binding ProductDescription}" TextWrapping="Wrap" Height="30" Margin="10 0 0 0"/>
                                 </StackPanel>
-                                    <Button Content="В корзину" Style="{StaticResource AuthButton}" FontSize="10" FontFamily="{StaticResource LableMontserratFont}" Grid.Column="1" Height="30" Width="70" Click="Button_Click"/>
-                                </Grid>
+                                <Button Content="В корзину" Style="{StaticResource AuthButton}" FontSize="10" FontFamily="{StaticResource LableMontserratFont}" Grid.Column="1" Height="30" Width="70" Click="Button_Click"/>
                             </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>
